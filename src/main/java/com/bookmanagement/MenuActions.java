@@ -21,6 +21,8 @@ public class MenuActions {
         如果类的逻辑比较复杂，或者在多个地方都可以用到，就放外面，
 
      */
+
+    //密码修改类
     private static class PasswordModiAction extends AbstractAction {
 
         PasswordModiAction(){
@@ -33,12 +35,14 @@ public class MenuActions {
 
         }
 
-        public static PasswordModiAction MODIFY_PASSWORD;
-        static {
-            MODIFY_PASSWORD=new PasswordModiAction();
-        }
-
     }
+
+    public static PasswordModiAction MODIFY_PASSWORD;
+    static {
+        MODIFY_PASSWORD=new PasswordModiAction();
+    }
+
+
 
 }
 

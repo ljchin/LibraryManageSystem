@@ -15,52 +15,18 @@ public class CreatedIcon {
         // 但只有包含 " / "才会从根目录查找，如果没有 " / "，则会从调用 getResource() 方法的类的路径开始查找。
         URL IconUrl=CreatedIcon.class.getResource("/main/resources/"+ImageName);
 
-//        String IconUrl="src/main/resources/借阅管理.png";
-
         ImageIcon icon= null;
         if (IconUrl != null) {
             icon = new ImageIcon(IconUrl);
         }
+
         //有时加载的图标可能太大或太小，你可以调整图标的大小。
         // 通过 ImageIcon.getImage() 获取 Image 对象，然后使用 getScaledInstance() 方法来调整大小。
         Image image=icon.getImage();
         Image scaledImage=image.getScaledInstance(30,30,Image.SCALE_DEFAULT);
-        ImageIcon scaledIcon=new ImageIcon(scaledImage);
-        return scaledIcon;
+        return new ImageIcon(scaledImage);
 
     }
-
-
-
-
-    public static void main(String[] args){
-
-        SwingUtilities.invokeLater(new Runnable() {
-            @Override
-            public void run() {
-
-                JFrame frame = new JFrame("Image Icon Example");
-                frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-                frame.setSize(400, 300);  // 设置窗口大小
-
-                // 加载图片并创建 ImageIcon
-                ImageIcon icon = add("借阅管理.png"); // 替换为你图片的路径
-
-                // 创建 JLabel，并设置图标
-//                JLabel label = new JLabel("This is an image icon!", icon, JLabel.CENTER);
-                JMenu menu=new JMenu();
-                menu.setIcon(add("借阅管理.png"));
-                frame.add(menu, BorderLayout.CENTER);  // 将 JLabel 添加到窗口
-
-                // 显示窗口
-                frame.setVisible(true);
-
-            }
-        });
-
-    }
-
-
 
 }
 
