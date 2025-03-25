@@ -2,10 +2,7 @@ package main.java.com.bookmanagement.DAO;
 
 import main.java.com.bookmanagement.model.Operator;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 
 public class Dao {
@@ -41,7 +38,7 @@ public class Dao {
 
 
     //数据库查询操作，
-    private static ResultSet executeQuery(String sql){
+    public static ResultSet executeQuery(String sql){
         try{
             if(conn==null){
                 new Dao();
@@ -53,7 +50,6 @@ public class Dao {
         }catch( SQLException e){
             e.printStackTrace();
             return null;
-        }finally{
         }
 
         return null;
@@ -61,7 +57,7 @@ public class Dao {
 
 
     //数据库更新操作
-    private static int executeUpdate(){
+    private static int executeUpdate(String sql){
 
 
         return 0;
@@ -100,6 +96,20 @@ public class Dao {
         Dao.close();
 
         return operator;
+    }
+
+
+    public static int InsertBookInfo(String ISBN, int typeID, String bookName, String author,
+                                     String translator, String publisher, Date date,int price){
+        int i=0;
+        try{
+            String sql="";
+            i=Dao.executeUpdate(sql);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        Dao.close();
+        return i;
     }
 
 
