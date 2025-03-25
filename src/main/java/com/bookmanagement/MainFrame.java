@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
     //主窗体的设计
     public void mainFra(){
         setTitle("图书管理系统");
-        setBounds(40,30,800,600);
+        setBounds(320,180,800,600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 
@@ -183,10 +183,10 @@ public class MainFrame extends JFrame {
 //        });
 
         //法2
-//        SwingUtilities.invokeLater(() -> new MainFrame());
+        SwingUtilities.invokeLater(() -> new MainFrame());
 
         //法3
-        SwingUtilities.invokeLater(LoginFrame::new);
+//        SwingUtilities.invokeLater(LoginFrame::new);
     }
 
 

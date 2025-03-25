@@ -22,8 +22,8 @@ public class CreatedIcon {
 
         //有时加载的图标可能太大或太小，你可以调整图标的大小。
         // 通过 ImageIcon.getImage() 获取 Image 对象，然后使用 getScaledInstance() 方法来调整大小。
-        Image image=icon.getImage();
-        Image scaledImage=image.getScaledInstance(30,30,Image.SCALE_DEFAULT);
+        //只能用来做工具，菜单图标的大小。
+        Image scaledImage=icon.getImage().getScaledInstance(30,30,Image.SCALE_DEFAULT);
         return new ImageIcon(scaledImage);
 
     }
