@@ -114,12 +114,12 @@ public class BookAddFrame extends JFrame {
             southPanel.setLayout(new FlowLayout());
 
             buttonAdd=new Button("添加");
-//            buttonAdd.addActionListener();
+            buttonAdd.addActionListener(new AddBookActionListener());
             southPanel.add(buttonAdd);
 
             buttonClose=new Button("退出");
             southPanel.add(buttonClose);
-//            buttonClose.addActionListener(ActionListener);
+            buttonClose.addActionListener(new CloseBookActionListener());
 
             add(southPanel,BorderLayout.SOUTH);
         }

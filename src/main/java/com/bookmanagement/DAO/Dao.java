@@ -1,8 +1,13 @@
 package main.java.com.bookmanagement.DAO;
 
+import main.java.com.bookmanagement.model.BookInfo;
 import main.java.com.bookmanagement.model.Operator;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Dao {
@@ -37,6 +42,8 @@ public class Dao {
     }
 
 
+    //以下这两个类本意应该是设置为私有方法，以便创建具体的SQL实现方法后调用这两个类，
+    //可是开始没想到，现在是推测；
     //数据库查询操作，
     public static ResultSet executeQuery(String sql){
         try{
@@ -58,6 +65,7 @@ public class Dao {
 
     //数据库更新操作
     private static int executeUpdate(String sql){
+
 
 
         return 0;
@@ -110,6 +118,64 @@ public class Dao {
         }
         Dao.close();
         return i;
+    }
+
+
+    //此类准备改改，这里，尝试JTable直接装完返回，试试
+    public static JTable selectBookInfo(){
+//        List<BookInfo> list=new ArrayList<>();
+        //这里我直接使用数组，不使用Object[][];
+//        BookInfo[] bookInfos=new BookInfo[];
+
+        //创建表格
+        String[] columnNames=new String[]{"图书编号","图书类别","图书名称","作者","译者","出版商","出版日期","价格"};
+        DefaultTableModel defaultTableModel=new DefaultTableModel(columnNames,0);
+        JTable table=new JTable(defaultTableModel);
+
+        //查询数据
+        String sql="select * from tb_bookInfo";
+        ResultSet rs=Dao.executeQuery(sql);
+
+        //数据赋值
+        try{
+            while(rs.next()){
+//                BookInfo bookInfo=new BookInfo();
+//                bookInfo.setISBN(rs.getString("ISBN"));
+//                bookInfo.setTypeID(rs.getInt("typeID"));
+//                bookInfo.setBookName(rs.getString("bookName"));
+//                bookInfo.setAuthor(rs.getString("author"));
+//                bookInfo.setTranslator(rs.getString("translator"));
+//                bookInfo.setPublisher(rs.getString("publisher"));
+//                bookInfo.setDate(rs.getDate("date"));
+//                bookInfo.setPrice(rs.getInt("price"));
+//
+//                list.add(bookInfo);
+                String isbn=rs.getString("ISBN");
+                int typeID =rs.getInt("typeID");
+                String bookName=rs.getString("bookName");
+                String author=rs.getString("author");
+                String translator=rs.getString("translator");
+                String publisher=rs.getString("publisher");
+                Date date=rs.getDate("date");
+                int price=rs.getInt("price");
+
+                defaultTableModel.addRow(new Object[]{isbn,typeID,bookName,author,
+                        translator,publisher,date,price});
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        Dao.close();
+        return table;
+    }
+
+
+    public static int UpdateBook(){
+
+
+
+        return 0;
     }
 
 
