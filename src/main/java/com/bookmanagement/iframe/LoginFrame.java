@@ -125,25 +125,25 @@ public class LoginFrame extends JFrame {
 
 
     //主程序，用以测试窗体，
-//    public static void main(String[] args){
-//
-//        //Swing 是单线程的，所有的 GUI 更新必须在事件调度线程上进行，
-//        // 使得在正确的线程进行，避免线程冲突和潜在的 UI 更新错误。
-//
-//        //法1
-////        SwingUtilities.invokeLater(new Runnable() {
-////            @Override
-////            public void run() {
-////                new MainFrame();
-////            }
-////        });
-//
-//        //法2
-////        SwingUtilities.invokeLater(() -> new MainFrame());
-//
-//        //法3
-//        SwingUtilities.invokeLater(LoginFrame::new);
-//    }
+    public static void main(String[] args){
+
+        //Swing 是单线程的，所有的 GUI 更新必须在事件调度线程上进行，
+        // 使得在正确的线程进行，避免线程冲突和潜在的 UI 更新错误。
+
+        //法1
+//        SwingUtilities.invokeLater(new Runnable() {
+//            @Override
+//            public void run() {
+//                new MainFrame();
+//            }
+//        });
+
+        //法2
+//        SwingUtilities.invokeLater(() -> new MainFrame());
+
+        //法3
+        SwingUtilities.invokeLater(LoginFrame::new);
+    }
 
 
 

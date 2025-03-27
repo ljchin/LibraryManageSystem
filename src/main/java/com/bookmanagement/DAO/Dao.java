@@ -83,6 +83,7 @@ public class Dao {
         }
     }
 
+    //如果说上面的几个是私有类，下面的就是其他函数所需的具体实现方法，
     public static Operator check(String name,char[] password){
 
         Operator operator=new Operator();

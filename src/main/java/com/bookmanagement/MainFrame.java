@@ -40,7 +40,7 @@ public class MainFrame extends JFrame {
         final JLabel label=new JLabel();
 
 
-//        setVisible(true);
+        setVisible(true);
     }
 
 
@@ -183,7 +183,7 @@ public class MainFrame extends JFrame {
 //        });
 
         //法2
-//        SwingUtilities.invokeLater(() -> new MainFrame());
+        SwingUtilities.invokeLater(() -> new MainFrame());
 
         //法3
 //        SwingUtilities.invokeLater(LoginFrame::new);
