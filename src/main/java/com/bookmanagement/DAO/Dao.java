@@ -1,13 +1,10 @@
 package main.java.com.bookmanagement.DAO;
 
-import main.java.com.bookmanagement.model.BookInfo;
 import main.java.com.bookmanagement.model.Operator;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Dao {
@@ -66,9 +63,17 @@ public class Dao {
     //数据库更新操作
     private static int executeUpdate(String sql){
 
+        try{
+            if(conn==null){
+                new Dao();
+            }
+            return conn.createStatement().executeUpdate(sql);
+        }catch(SQLException ee){
+//            ee.printStackTrace();
+            System.out.println(ee.getMessage());
+            return -1;
+        }
 
-
-        return 0;
     }
 
 
@@ -112,7 +117,8 @@ public class Dao {
                                      String translator, String publisher, Date date,int price){
         int i=0;
         try{
-            String sql="";
+            String sql="insert into tb_bookInfo(ISBN,typeid,bookname,author,translator,publisher,date,price)\n" +
+                    "value('"+ISBN+"','"+typeID+"','"+bookName+"','"+author+"','"+translator+"','"+publisher+"','"+date+"','"+price+")";
             i=Dao.executeUpdate(sql);
         }catch(Exception e){
             e.printStackTrace();
@@ -172,8 +178,38 @@ public class Dao {
     }
 
 
-    public static int UpdateBook(){
+    public static int UpdateBookInfo(String ISBN, String bookName, String author,
+                                     String translator, String publisher, String date, int price){
 
+        try{
+//            String updateSQL="update tb_bookInfo set bookName='ad' ,author=' ',translator=' ',\n" +
+//                    "                       publisher=' ',date=' ',price=''\n" +
+//                    "where ISBN=''";
+            String updateSQL = "UPDATE tb_bookInfo SET bookName='" + bookName + "', " +
+                    "author='" + author + "', translator='" + translator + "', " +
+                    "publisher='" + publisher + "', date='" + date + "', " +
+                    "price=" + price + " WHERE ISBN='" + ISBN + "'";
+            //这种方式是不推荐的容易收到SQL注入的攻击，
+            //以下是推荐的写法，这中可以放着SQL注入的危害，但是本次写，我把executeUpdate分开写了，
+            // 就暂且不用以下方法，
+//            String updateSQL = "UPDATE tb_bookInfo SET bookName=?, author=?, translator=?, publisher=?, date=?, price=? WHERE ISBN=?";
+//
+//            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/yourDatabase", "username", "password");
+//                 PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
+//
+//                // 设置 PreparedStatement 的参数
+//                pstmt.setString(1, bookName);
+//                pstmt.setString(2, author);
+//                pstmt.setString(3, translator);
+//                pstmt.setString(4, publisher);
+//                pstmt.setString(5, date);
+//                pstmt.setInt(6, price);
+//                pstmt.setString(7, ISBN);
+
+            Dao.executeUpdate(updateSQL);
+        }catch(Exception eee){
+            eee.printStackTrace();
+        }
 
 
         return 0;
