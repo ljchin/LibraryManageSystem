@@ -1,9 +1,13 @@
 package main.java.com.bookmanagement.iframe;
 
 import com.mysql.cj.x.protobuf.MysqlxCrud;
+import main.java.com.bookmanagement.DAO.Dao;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 public class NewBookOrderFrame extends JFrame {
 
@@ -99,6 +103,8 @@ public class NewBookOrderFrame extends JFrame {
             JPanel panel1=new JPanel(new GridLayout(1,2));
             add=new JButton("添加");
             close=new JButton("退出");
+            add.addActionListener(new AddButtonListener());
+            close.addActionListener(new CloseButtonListener());
             panel1.add(add);
             panel1.add(close);
 
@@ -106,6 +112,39 @@ public class NewBookOrderFrame extends JFrame {
         }
 
         setVisible(true);
+    }
+
+    public class AddButtonListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+
+            if(bookISBN.getText().isEmpty()||bookName.getText().isEmpty()||
+            price.getText().isEmpty()||Date.getText().isEmpty()||OrderNum.getText().isEmpty()||
+            discount.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null,"文本框不可为空");
+                return;
+            }
+
+            int selectBu;
+            if(yesRadioButton.isSelected()){
+                selectBu=1;
+            }else{
+                selectBu=0;
+            }
+            int i=Dao.addOrderInfo(bookISBN.getText(), new java.sql.Date(System.currentTimeMillis()),Integer.parseInt(OrderNum.getText()),
+                    Operator.getSelectedItem().toString(),selectBu,Float.valueOf(discount.getText()));
+
+            if(i==1){
+                JOptionPane.showMessageDialog(null,"图书订阅成功");
+            }
+        }
+    }
+
+    public class CloseButtonListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+        }
     }
 
 

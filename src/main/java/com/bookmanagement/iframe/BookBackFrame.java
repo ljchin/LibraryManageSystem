@@ -1,8 +1,15 @@
 package main.java.com.bookmanagement.iframe;
 
+import main.java.com.bookmanagement.DAO.Dao;
+import main.java.com.bookmanagement.model.BookBorrow;
+
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.List;
+import java.time.LocalDate;
 
 public class BookBackFrame extends JFrame {
 
@@ -63,6 +70,7 @@ public class BookBackFrame extends JFrame {
             jPanel3.add(BorrowDate);
             jPanel3.add(new JLabel("规定天数："));
             expectDays=new JTextField(20);
+            expectDays.setText("15");
             jPanel3.add(expectDays);
             jPanel3.add(new JLabel("实际天数："));
             actualDays=new JTextField(20);
@@ -83,6 +91,7 @@ public class BookBackFrame extends JFrame {
             jPanel4.add(new JLabel());
             jPanel4.add(new JLabel("当前时间："));
             currentDate=new JTextField(20);
+            currentDate.setText(LocalDate.now().toString());
             jPanel4.add(currentDate);
             jPanel4.add(new JLabel("操作员："));
             Operator=new JTextField(20);
@@ -100,6 +109,46 @@ public class BookBackFrame extends JFrame {
 
         setVisible(true);
     }
+
+    //本方法为输入读者编号后，点击回车 enter 就会搜索JTable 的信息以及底部文本框的信息填充，
+    public static void selectInfoBorrow(String str){
+
+        List<BookBorrow> list= Dao.selectBorrowInfo(str);
+        for(int i=0;i<list.size();i++){
+            BookBorrow bStr=list.get(i);
+            String[] add=new String[]{bStr.getBookName(),bStr.getBookIsbn(), String.valueOf(bStr.getTypeID()),
+            bStr.getName(), String.valueOf(bStr.getBorrowDate()),String.valueOf(bStr.getBackDate())};
+            defaultTableModelBack.addRow(add);
+        }
+        //刷新表格
+        jTableBack=new JTable(defaultTableModelBack);
+
+    }
+
+    public class backListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            if(BorrowDate.getText().isEmpty()||expectDays.getText().isEmpty()||
+            actualDays.getText().isEmpty()||outDays.getText().isEmpty()||
+            amountMoney.getText().isEmpty()||currentDate.getText().isEmpty()||
+            currentDate.getText().isEmpty()||Operator.getText().isEmpty()){
+                JOptionPane.showMessageDialog(null,"底部文本框不可为空");
+                return;
+            }
+
+            //接下来就是添加信息的部分，
+
+        }
+    }
+
+    public class closeListener implements ActionListener{
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            dispose();
+
+        }
+    }
+
 
 
     //主程序，用以测试窗体，

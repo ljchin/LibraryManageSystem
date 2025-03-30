@@ -1,10 +1,14 @@
 package main.java.com.bookmanagement.DAO;
 
+import main.java.com.bookmanagement.model.BookBorrow;
 import main.java.com.bookmanagement.model.Operator;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class Dao {
@@ -194,8 +198,7 @@ public class Dao {
             // 就暂且不用以下方法，
 //            String updateSQL = "UPDATE tb_bookInfo SET bookName=?, author=?, translator=?, publisher=?, date=?, price=? WHERE ISBN=?";
 //
-//            try (Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/yourDatabase", "username", "password");
-//                 PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
+//            try (PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
 //
 //                // 设置 PreparedStatement 的参数
 //                pstmt.setString(1, bookName);
@@ -211,9 +214,72 @@ public class Dao {
             eee.printStackTrace();
         }
 
+        return 0;
+    }
+
+
+    public static int InsertBookBorrow(String ISBN, String readerID, int operator,
+                                       LocalDate borrowDate,LocalDate backDate){
 
         return 0;
     }
+
+    public static List<BookBorrow> selectBorrowInfo(String str){
+
+        List<BookBorrow> resultList=new ArrayList<>();
+        String sql="select bookName,bookISBN,typeid,Name,borrowDate,backdate\n" +
+                "        from tb_borrow\n" +
+                "        join tb_bookinfo on tb_bookinfo.ISBN=tb_borrow.bookISBN\n" +
+                "        join tb_reader on tb_reader.id=tb_borrow.readerID\n" +
+                "        where tb_borrow.readerID=?";
+
+        try(PreparedStatement pstmt=conn.prepareStatement(sql)){
+            pstmt.setString(1,str);
+            pstmt.executeQuery();
+
+            ResultSet resultSet=pstmt.getResultSet();
+            while(resultSet.next()){
+                BookBorrow bb=new BookBorrow();
+                bb.setBookName(resultSet.getString("bookName"));
+                bb.setBookIsbn(resultSet.getString("bookISBN"));
+                bb.setTypeID(resultSet.getInt("typeID"));
+                bb.setName(resultSet.getString("Name"));
+                bb.setBorrowDate(resultSet.getDate("borrowDate"));
+                bb.setBackDate(resultSet.getDate("backDate"));
+
+                resultList.add(bb);
+            }
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return resultList;
+    }
+
+    public static int addOrderInfo(String isbn,Date da,int num,String opera,int isCheck,float discount){
+
+        int i=-1;
+        String sql="insert into tb_order(*) value(?,?,?,?,?,?)";
+
+        try(PreparedStatement pst=conn.prepareStatement(sql)){
+            pst.setString(1,isbn);
+            pst.setDate(2,da);
+            pst.setInt(3,num);
+            pst.setString(4,opera);
+            pst.setInt(5,isCheck);
+            pst.setFloat(6,discount);
+
+            pst.executeUpdate();
+            i=1;
+        }catch(SQLException E){
+            E.printStackTrace();
+        }
+
+        return i;
+    }
+
+
 
 
 }
