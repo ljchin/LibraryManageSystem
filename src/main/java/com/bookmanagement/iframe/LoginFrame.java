@@ -55,9 +55,11 @@ public class LoginFrame extends JFrame {
         // 嵌板 south
         final JPanel panel_1=new JPanel();
         JButton LoginButton=new JButton("登录");
+        LoginButton.addActionListener(new BookLoginAction());
 //        LoginButton.addActionListener();
         panel_1.add(LoginButton);
         JButton resetButton=new JButton("重置");
+        resetButton.addActionListener(new BookResertAction());
 //        resetButton.addActionListener();
         panel_1.add(resetButton);
 
@@ -144,8 +146,5 @@ public class LoginFrame extends JFrame {
         //法3
         SwingUtilities.invokeLater(LoginFrame::new);
     }
-
-
-
 
 }

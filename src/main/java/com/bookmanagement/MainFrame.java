@@ -1,11 +1,13 @@
 package main.java.com.bookmanagement;
 
+import main.java.com.bookmanagement.iframe.*;
 import main.java.com.bookmanagement.util.CreatedIcon;
-import main.java.com.bookmanagement.iframe.LoginFrame;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MainFrame extends JFrame {
     /*
@@ -13,6 +15,19 @@ public class MainFrame extends JFrame {
     此别名可设置为BookManagementApplication  启动类
     原设计此类似为Library类
      */
+
+
+    private JMenu readerManagerSubmenu;
+    private JMenu bookInfoSubmenu;
+    private JMenu bookTypeManageSubmenu;
+    private JButton readerAddButton;
+    private JButton readerModiAndDelButton;
+    private JButton bookAddButton;
+    private JButton bookModiAndDeleteButton;
+    private JButton bookTypeAddButton;
+    private JButton bookBorrowButton;
+    private JButton bookOrderButton;
+    private JButton ExitButton;
 
 
     //构造函数
@@ -53,13 +68,13 @@ public class MainFrame extends JFrame {
         JMenu baseMenu=new JMenu("基础数据维护");
         baseMenu.setIcon(CreatedIcon.add("基础数据维护.png"));
         {
-            JMenu readerManagerSubmenu=new JMenu("读者信息管理");
+            readerManagerSubmenu=new JMenu("读者信息管理");
 
 
-            JMenu bookInfoSubmenu=new JMenu("图书信息管理");
+            bookInfoSubmenu=new JMenu("图书信息管理");
 
 
-            JMenu bookTypeManageSubmenu=new JMenu("图书类别管理");
+            bookTypeManageSubmenu=new JMenu("图书类别管理");
 
 
             baseMenu.add(readerManagerSubmenu);
@@ -109,54 +124,112 @@ public class MainFrame extends JFrame {
         toolBar.setBorder(new BevelBorder(BevelBorder.RAISED));
 
         //为按钮添加 读者添加 动作对象
-        JButton readerAddButton=new JButton("读者添加");
+        readerAddButton=new JButton("读者添加");
         readerAddButton.setIcon(CreatedIcon.add(""));//从这开始，图片尚未添加
 //        readerAddButton.setHideActionText(true);
         readerAddButton.setToolTipText("添加读者信息");
         toolBar.add(readerAddButton);
         //读者修改与删除
-        JButton readerModiAndDelButton=new JButton("修改与删除读者");
+        readerModiAndDelButton=new JButton("修改与删除读者");
         readerModiAndDelButton.setIcon(CreatedIcon.add(""));
 //        readerModiAndDelButton.setHideActionText(true);
         readerModiAndDelButton.setToolTipText("修改与删除读者信息");
         toolBar.add(readerModiAndDelButton);
 
         //bookInfo add
-        JButton bookAddButton=new JButton("添加图书");
+        bookAddButton=new JButton("添加图书");
         bookAddButton.setIcon(CreatedIcon.add(""));
 //        bookAddButton.setHideActionText(false);
         bookAddButton.setToolTipText("添加图书信息");
         toolBar.add(bookAddButton);
         //bookInfo modify delete
-        JButton bookModiAndDeleteButton=new JButton("修改与删除图书");
+        bookModiAndDeleteButton=new JButton("修改与删除图书");
         bookModiAndDeleteButton.setIcon(CreatedIcon.add(""));
 //        bookModiAndDeleteButton.setHideActionText(false);
         bookModiAndDeleteButton.setToolTipText("修改与删除图书信息");
         toolBar.add(bookModiAndDeleteButton);
 
         //图书类别添加
-        JButton bookTypeAddButton=new JButton("图书类别");
+        bookTypeAddButton=new JButton("图书类别");
         bookTypeAddButton.setIcon(CreatedIcon.add(""));
         bookTypeAddButton.setToolTipText("添加图书类别");
         toolBar.add(bookTypeAddButton);
 
         //图书借阅
-        JButton bookBorrowButton=new JButton("图书借阅");
+        bookBorrowButton=new JButton("图书借阅");
         bookBorrowButton.setIcon(CreatedIcon.add(""));
         bookBorrowButton.setToolTipText("借阅图书");
         toolBar.add(bookBorrowButton);
 
         //图书订购
-        JButton bookOrderButton=new JButton("图书订购");
+        bookOrderButton=new JButton("图书订购");
         bookOrderButton.setIcon(CreatedIcon.add(""));
         bookOrderButton.setToolTipText("订购图书");
         toolBar.add(bookOrderButton);
 
         //退出
-        JButton ExitButton=new JButton("退出");
+        ExitButton=new JButton("退出");
         ExitButton.setIcon(CreatedIcon.add(""));
         ExitButton.setToolTipText("退出");
         toolBar.add(ExitButton);
+
+        {
+            readerManagerSubmenu.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+            readerModiAndDelButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+            bookAddButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SwingUtilities.invokeLater(BookAddFrame::new);
+                }
+            });
+
+            bookModiAndDeleteButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SwingUtilities.invokeLater(BookModiAndDeleteFrame::new);
+                }
+            });
+
+            bookTypeAddButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+
+                }
+            });
+
+            bookBorrowButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SwingUtilities.invokeLater(BookBorrowFrame::new);
+                }
+            });
+
+            bookOrderButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    SwingUtilities.invokeLater(NewBookOrderFrame::new);
+                }
+            });
+
+            ExitButton.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    dispose();
+                }
+            });
+        }
 
         return toolBar;
     }
@@ -188,6 +261,5 @@ public class MainFrame extends JFrame {
         //法3
 //        SwingUtilities.invokeLater(LoginFrame::new);
     }
-
 
 }
